@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Food {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String   @db.VarChar(255)
+  price     Float
+  foodImage String   @db.VarChar(255)
+  menu      Menu    @relation(fields: [menuId], references: [id])
+  menuId    Int
+  orderItems  OrderItem[]
+}
+
+model Order {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  invoices  Invoice[]
+  orderItems  OrderItem[]
+  user      User    @relation(fields: [userId], references: [id])
+  userId    Int
+}
+
+model OrderItem {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  quantity  Int
+  unitPrice Float
+  order     Order    @relation(fields: [orderId], references: [id])
+  orderId   Int
+  food      Food    @relation(fields: [foodId], references: [id])
+  foodId    Int
+}
+
+model Invoice {
+  id              Int     @id @default(autoincrement())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  paymentMethod   String  @db.VarChar(255)
+  paymentStatus   String  @db.VarChar(255)
+  order           Order   @relation(fields: [orderId], references: [id])
+  orderId         Int
+}
+
+model User {
+  id              Int     @id @default(autoincrement())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  firstName       String  @db.VarChar(255)
+  lastName        String  @db.VarChar(255)
+  password        String  @db.VarChar(255)
+  email           String  @db.VarChar(255) @unique
+  orders          Order[]
+}
+
+model Menu {
+  id              Int     @id @default(autoincrement())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  name            String  @db.VarChar(255)
+  category        String  @db.VarChar(255)
+  foods           Food[]
+}

@@ -1,0 +1,31 @@
+import express, { Application } from "express";
+import cors from "cors";
+
+import foodRouter from "./routes/food.router";
+import invoiceRouter from "./routes/invoice.router";
+import menuRouter from "./routes/menu.router";
+import orderRouter from "./routes/order.router";
+import orderItemRouter from "./routes/orderItem.router";
+import userRouter from "./routes/user.router";
+
+const app: Application = express();
+app.use(express.urlencoded({ extended: true }));
+
+app.use(express.json());
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+);
+
+app.use("/users", userRouter);
+app.use("/foods", foodRouter);
+app.use("/menus", menuRouter);
+app.use("/orders", orderRouter);
+app.use("/orderItems", orderItemRouter);
+app.use("/invoices", invoiceRouter);
+
+app.listen(3000, () => {
+  console.log("Server is running on port 3000");
+});
