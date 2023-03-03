@@ -4,7 +4,8 @@
   "description": "Backend for a restaurant app",
   "main": "app.ts",
   "scripts": {
-    "start": "tsc && node dist/app.js",
+    "postinstall": "tsc",
+    "start": "node dist/app.js",
     "dev": "nodemon -L app.ts"
   },
   "keywords": [],
