@@ -21,5 +21,8 @@ RUN npx prisma generate
 # Run and expose the server on port 3000
 EXPOSE 3000
 
-# A command to start the server
-CMD ["npm", "run", "dev"]
+# pass an argument to determine if we are in production or development (start or dev)
+ARG BUILDTYPE
+
+# The npm script is different based on the prod or dev environment
+CMD ["npm", "run", "$BUILDTYPE"]
