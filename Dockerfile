@@ -21,8 +21,6 @@ RUN npx prisma generate
 # Run and expose the server on port 3000
 EXPOSE 3000
 
-# pass an argument to determine if we are in production or development (start or dev)
-ARG BUILDTYPE
-
-# The npm script is different based on the prod or dev environment
-CMD ["npm", "run", "$BUILDTYPE"]
+# This is for the development script
+# On render website it overrides the run command
+CMD ["npm", "run", "dev"]
