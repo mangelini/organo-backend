@@ -23,4 +23,5 @@ EXPOSE 3000
 
 # This is for the development script
 # On render website it overrides the run command
+# and execute a prisma migrate to create the tables from the schema
 CMD ["npm", "run", "dev"]
