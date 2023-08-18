@@ -1,8 +1,7 @@
 import express from "express";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../helpers/prismaHelper";
 
 const router = express.Router();
-const prisma = new PrismaClient();
 
 router.get("/", async (req, res) => {
   const orderItems = await prisma.orderItem.findMany();
